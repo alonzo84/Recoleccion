@@ -2,6 +2,9 @@ const fs = require('fs');
 const cheerio = require('cheerio');
 const axios = require('axios');
 const csvParser = require('csv-parser');
+const path = require('path');
+const folderName = 'result';
+const rutaCarpeta = path.join(__dirname, folderName);
 
 // Función para descargar el contenido de una URL
 async function downloadUrlContent(url) {
@@ -23,7 +26,11 @@ function extractElementText(html) {
 
 // Función para guardar el texto en un archivo de texto con un nombre adecuado
 function saveTextToFile(fileName, text) {
-  fs.writeFile(fileName, text, (err) => {
+    const rutaArchivo = path.join(rutaCarpeta, fileName);
+    if (!fs.existsSync(rutaCarpeta)) {
+        fs.mkdirSync(rutaCarpeta);
+      }
+  fs.writeFile(rutaArchivo, text, (err) => {
     if (err) {
       console.error(`Error al guardar ${fileName}:`, err);
     } else {
