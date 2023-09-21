@@ -1,9 +1,10 @@
-const fs = require('fs');
+const fs = require('fs'); //filesystem
 const cheerio = require('cheerio');
 const axios = require('axios');
 const csvParser = require('csv-parser');
 const path = require('path');
-const folderName = 'result';
+
+const folderName = 'mensajes';
 const rutaCarpeta = path.join(__dirname, folderName);
 
 // Función para descargar el contenido de una URL
@@ -49,6 +50,7 @@ function processCsvFile(csvFilePath) {
 
       console.log(`Procesando ${url}...`);
       const html = await downloadUrlContent(url);
+      
       if (html) {
         const extractedText = extractElementText(html);
         saveTextToFile(fileName, extractedText);
